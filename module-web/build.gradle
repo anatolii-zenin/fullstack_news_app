@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':module-service')
+
+    testImplementation("io.rest-assured:rest-assured:5.3.2")
+    testImplementation("org.json:json:20231013")
+}

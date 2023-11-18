@@ -1,0 +1,9 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = 'com.mjc.school.main.Main'
+
+dependencies {
+    implementation project(':module-web')
+}

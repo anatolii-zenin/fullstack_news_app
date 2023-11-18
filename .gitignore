@@ -1,0 +1,9 @@
+/.gradle/
+/.idea/
+/gradle/
+/build/
+/module-main/build/
+/module-repository/build/
+/module-service/build/
+/module-web/build/
+gradlew*

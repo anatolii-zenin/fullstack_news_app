@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':module-repository')
+    implementation("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+}

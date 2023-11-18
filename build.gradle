@@ -1,0 +1,44 @@
+plugins {
+    id 'java-base'
+    id 'jacoco'
+}
+
+wrapper {
+    gradleVersion = gradlewVersion
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    group = 'com.mjc.school'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation "org.springframework:spring-context:$springVersion"
+        implementation "org.springframework:spring-core:$springVersion"
+        implementation "org.aspectj:aspectjweaver:$jweaverVersion"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:$bootVersion"
+        implementation ("org.springframework.boot:spring-boot-starter-web:$bootVersion")
+        implementation "io.springfox:springfox-boot-starter:$springfoxStarterVersion"
+
+        testImplementation "org.springframework:spring-test:$springVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
+        testImplementation "org.assertj:assertj-core:$assertjVersion"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
+        testImplementation "com.tngtech.archunit:archunit-junit5:$archUnitVersion"
+
+        annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+        implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
