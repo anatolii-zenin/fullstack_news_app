@@ -1,9 +1,7 @@
 package com.mjc.school.repository.implementation;
 
-import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.model.implementation.NewsEntity;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,29 +11,11 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-@Scope("singleton")
-public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
-        implements NewsRepository {
+@Component
+public class NewsRepositoryImpl {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Override
-    protected Class<NewsEntity> getEntityClass() {
-        return NewsEntity.class;
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return entityManager;
-    }
-
-    @Override
-    protected String getTableName() {
-        return "news";
-    }
-
-    @Override
     public List<NewsEntity> readNewsByCriteria(NewsEntity req) {
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var criteriaQuery = criteriaBuilder.createQuery(NewsEntity.class);

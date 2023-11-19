@@ -1,11 +1,13 @@
-package com.mjc.school.repository.page;
+package com.mjc.school.service.dto.page;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class PageParams {
+@Setter
+@AllArgsConstructor
+public class PageReq {
     private int pageNum;
     private int pageSize;
     private String sortedBy;

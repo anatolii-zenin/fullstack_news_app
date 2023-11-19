@@ -1,6 +1,8 @@
 package com.mjc.school.repository.model;
 
-public interface BaseEntity<K> {
+import java.io.Serializable;
+
+public interface BaseEntity<K extends Serializable> {
 
     K getId();
 

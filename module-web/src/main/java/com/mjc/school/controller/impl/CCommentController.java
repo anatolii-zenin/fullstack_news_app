@@ -4,13 +4,13 @@ import com.mjc.school.controller.CommentController;
 import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.comment.CommentDTOReq;
 import com.mjc.school.service.dto.comment.CommentDTOResp;
-import com.mjc.school.service.dto.page.PageDTOReq;
-import com.mjc.school.service.dto.page.PageDTOResp;
+import com.mjc.school.service.dto.page.PageReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +27,18 @@ public class CCommentController implements CommentController {
     @GetMapping(value = "/comments")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "List all comments.",
-            response = PageDTOResp.class)
+            response = Page.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved requested data"),
             @ApiResponse(code = 400, message = "Received a malformed request"),
             @ApiResponse(code = 500, message = "Unexpected internal error")
     })
-    public PageDTOResp<CommentDTOResp> readAll(
+    public Page<CommentDTOResp> readAll(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sortBy", required = false, defaultValue = "createDate") String sortBy,
             @RequestParam(name = "order", required = false, defaultValue = "desc") String order) {
-        var pageReq = new PageDTOReq(page, size, sortBy, order);
+        var pageReq = new PageReq(page, size, sortBy, order);
         return service.readAll(pageReq);
     }
 

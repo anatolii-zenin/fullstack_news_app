@@ -1,14 +1,13 @@
 package com.mjc.school.service.mapper;
 
 import com.mjc.school.repository.model.implementation.CommentEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.dto.comment.CommentDTOReq;
 import com.mjc.school.service.dto.comment.CommentDTOResp;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -26,5 +25,7 @@ public abstract class CommentDTOMapper {
     @Mapping(target = "news.id", source = "req.newsId")
     public abstract CommentEntity dtoToCommentEntity(CommentDTOReq req);
 
-    public abstract PageDTOResp<CommentDTOResp> authorsPageToDto(Page<CommentEntity> page);
+    public Page<CommentDTOResp> pageToDtoPage(Page<CommentEntity> entityPage) {
+        return entityPage.map(this::commentEntityToDto);
+    }
 }

@@ -2,14 +2,13 @@ package com.mjc.school.service.implementation;
 
 import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.dto.author.AuthorDTOReq;
 import com.mjc.school.service.dto.author.AuthorDTOResp;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import com.mjc.school.service.mapper.AuthorDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class AuthorServiceImpl
-        extends BaseServiceImpl<AuthorDTOReq, AuthorDTOResp, AuthorEntity, AuthorRepository>
+        extends AbstractServiceImpl<AuthorDTOReq, AuthorDTOResp, AuthorEntity, AuthorRepository>
         implements AuthorService {
     @Autowired
     AuthorRepository authorRepository;
@@ -30,7 +29,7 @@ public class AuthorServiceImpl
     }
 
     @Override
-    protected List<AuthorDTOResp> entitiesToDtos(List<AuthorEntity> authorEntities) {
+    protected List<AuthorDTOResp> entitiesToDto(List<AuthorEntity> authorEntities) {
         return mapper.authorsToDtoResp(authorEntities);
     }
 
@@ -40,8 +39,8 @@ public class AuthorServiceImpl
     }
 
     @Override
-    protected PageDTOResp<AuthorDTOResp> pageToDto(Page<AuthorEntity> page) {
-        return mapper.authorsPageToDto(page);
+    protected Page<AuthorDTOResp> pageToDtoPage(Page<AuthorEntity> page) {
+        return mapper.pageToDtoPage(page);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class AuthorServiceImpl
 
     @Override
     public AuthorDTOResp readAuthorByNewsId(Long newsId) {
-        var entity = authorRepository.readByNewsId(newsId);
+        var entity = authorRepository.readAuthorByNewsId(newsId);
         return entity.map(this::entityToDto).orElse(null);
     }
 }

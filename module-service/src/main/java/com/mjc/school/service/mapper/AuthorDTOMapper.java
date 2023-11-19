@@ -1,14 +1,13 @@
 package com.mjc.school.service.mapper;
 
 import com.mjc.school.repository.model.implementation.AuthorEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.dto.author.AuthorDTOReq;
 import com.mjc.school.service.dto.author.AuthorDTOResp;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,5 +35,7 @@ public abstract class AuthorDTOMapper {
         return authorEntity;
     }
 
-    public abstract PageDTOResp<AuthorDTOResp> authorsPageToDto(Page<AuthorEntity> page);
+    public Page<AuthorDTOResp> pageToDtoPage(Page<AuthorEntity> entityPage) {
+        return entityPage.map(this::authorToDtoResp);
+    }
 }

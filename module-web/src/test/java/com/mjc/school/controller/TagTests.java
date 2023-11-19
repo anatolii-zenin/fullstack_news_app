@@ -1,7 +1,6 @@
 package com.mjc.school.controller;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import static com.mjc.school.controller.TestHelper.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-@Disabled
 public class TagTests {
     @Test
     void createTagTest() {
@@ -63,7 +61,7 @@ public class TagTests {
                 .when().get(TAGS)
                 .then()
                 .statusCode(200)
-                .body("data", hasSize(greaterThanOrEqualTo(2)));
+                .body("content", hasSize(greaterThanOrEqualTo(2)));
     }
 
     @Test

@@ -2,14 +2,13 @@ package com.mjc.school.service.implementation;
 
 import com.mjc.school.repository.CommentRepository;
 import com.mjc.school.repository.model.implementation.CommentEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.comment.CommentDTOReq;
 import com.mjc.school.service.dto.comment.CommentDTOResp;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import com.mjc.school.service.mapper.CommentDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class CommentServiceImpl
-        extends BaseServiceImpl<CommentDTOReq, CommentDTOResp, CommentEntity, CommentRepository>
+        extends AbstractServiceImpl<CommentDTOReq, CommentDTOResp, CommentEntity, CommentRepository>
         implements CommentService {
     @Autowired
     CommentRepository commentRepository;
@@ -30,7 +29,7 @@ public class CommentServiceImpl
     }
 
     @Override
-    protected List<CommentDTOResp> entitiesToDtos(List<CommentEntity> commentEntities) {
+    protected List<CommentDTOResp> entitiesToDto(List<CommentEntity> commentEntities) {
         return mapper.commentEntitiesToDto(commentEntities);
     }
 
@@ -40,8 +39,8 @@ public class CommentServiceImpl
     }
 
     @Override
-    protected PageDTOResp<CommentDTOResp> pageToDto(Page<CommentEntity> page) {
-        return mapper.authorsPageToDto(page);
+    protected Page<CommentDTOResp> pageToDtoPage(Page<CommentEntity> page) {
+        return mapper.pageToDtoPage(page);
     }
 
     @Override
@@ -57,6 +56,6 @@ public class CommentServiceImpl
     @Override
     @Transactional(readOnly = true)
     public List<CommentDTOResp> readCommentsByNewsId(Long newsId) {
-        return entitiesToDtos(commentRepository.readByNewsId(newsId));
+        return entitiesToDto(commentRepository.readCommentsByNewsId(newsId));
     }
 }

@@ -1,14 +1,12 @@
 package com.mjc.school.controller;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.mjc.school.controller.TestHelper.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-@Disabled
 public class AuthorTests {
     
     @Test
@@ -41,7 +39,7 @@ public class AuthorTests {
                 .when().get(AUTHORS)
                 .then()
                 .statusCode(200)
-                .body("data", hasSize(greaterThanOrEqualTo(2)));
+                .body("content", hasSize(greaterThanOrEqualTo(2)));
     }
 
     @Test

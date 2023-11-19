@@ -2,14 +2,13 @@ package com.mjc.school.service.implementation;
 
 import com.mjc.school.repository.TagRepository;
 import com.mjc.school.repository.model.implementation.TagEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.TagService;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import com.mjc.school.service.dto.tag.TagDTOReq;
 import com.mjc.school.service.dto.tag.TagDTOResp;
 import com.mjc.school.service.mapper.TagDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class TagServiceImpl
-        extends BaseServiceImpl<TagDTOReq, TagDTOResp, TagEntity, TagRepository>
+        extends AbstractServiceImpl<TagDTOReq, TagDTOResp, TagEntity, TagRepository>
         implements TagService {
     @Autowired
     TagRepository tagRepository;
@@ -30,7 +29,7 @@ public class TagServiceImpl
     }
 
     @Override
-    protected List<TagDTOResp> entitiesToDtos(List<TagEntity> tagEntities) {
+    protected List<TagDTOResp> entitiesToDto(List<TagEntity> tagEntities) {
         return mapper.entitiesToResps(tagEntities);
     }
 
@@ -40,8 +39,8 @@ public class TagServiceImpl
     }
 
     @Override
-    protected PageDTOResp<TagDTOResp> pageToDto(Page<TagEntity> page) {
-        return mapper.authorsPageToDto(page);
+    protected Page<TagDTOResp> pageToDtoPage(Page<TagEntity> page) {
+        return mapper.pageToDtoPage(page);
     }
 
     @Override
@@ -57,6 +56,6 @@ public class TagServiceImpl
     @Override
     @Transactional(readOnly = true)
     public List<TagDTOResp> readByNewsId(Long id) {
-        return entitiesToDtos(tagRepository.readByNewsId(id));
+        return entitiesToDto(tagRepository.readTagsByNewsId(id));
     }
 }

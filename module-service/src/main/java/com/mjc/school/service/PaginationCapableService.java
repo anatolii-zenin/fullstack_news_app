@@ -1,10 +1,10 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.page.PageDTOReq;
-import com.mjc.school.service.dto.page.PageDTOResp;
+import com.mjc.school.service.dto.page.PageReq;
+import org.springframework.data.domain.Page;
 
 public interface PaginationCapableService<T, R, K> {
-    PageDTOResp<R> readAll(PageDTOReq req);
+    Page<R> readAll(PageReq req);
 
     R readById(K id);
 
@@ -12,5 +12,5 @@ public interface PaginationCapableService<T, R, K> {
 
     R update(T updateRequest);
 
-    boolean deleteById(K id);
+    void deleteById(K id);
 }

@@ -7,7 +7,7 @@ import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.author.AuthorDTOResp;
 import com.mjc.school.service.dto.comment.CommentDTOResp;
 import com.mjc.school.service.dto.news.NewsDTOResp;
-import com.mjc.school.service.dto.page.PageDTOReq;
+import com.mjc.school.service.dto.page.PageReq;
 import com.mjc.school.service.dto.tag.TagDTOResp;
 import com.mjc.school.service.exception.BadRequestException;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 @Component
 public class PageValidator {
-    public void validate(Class<?> serviceClass, PageDTOReq req) {
+    public void validate(Class<?> serviceClass, PageReq req) {
         if (req.getOrder() == null || req.getSortedBy() == null)
             throw new BadRequestException("Null sorting parameters found. This should never happen");
 
@@ -37,7 +37,7 @@ public class PageValidator {
             validateSorting(TagDTOResp.class, req);
     }
 
-    private void validateSorting(Class<?> dtoClass, PageDTOReq req) {
+    private void validateSorting(Class<?> dtoClass, PageReq req) {
         var dtoFields = dtoClass.getDeclaredFields();
         var fieldStrings = new ArrayList<String>();
         for (var field : dtoFields)

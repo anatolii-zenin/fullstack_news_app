@@ -2,14 +2,13 @@ package com.mjc.school.service.implementation;
 
 import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.model.implementation.NewsEntity;
-import com.mjc.school.repository.page.Page;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.news.NewsDTOReq;
 import com.mjc.school.service.dto.news.NewsDTOResp;
-import com.mjc.school.service.dto.page.PageDTOResp;
 import com.mjc.school.service.mapper.NewsDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class NewsServiceImpl
-        extends BaseServiceImpl<NewsDTOReq, NewsDTOResp, NewsEntity, NewsRepository>
+        extends AbstractServiceImpl<NewsDTOReq, NewsDTOResp, NewsEntity, NewsRepository>
         implements NewsService {
     @Autowired
     NewsRepository newsRepository;
@@ -32,7 +31,7 @@ public class NewsServiceImpl
     }
 
     @Override
-    protected List<NewsDTOResp> entitiesToDtos(List<NewsEntity> newsEntities) {
+    protected List<NewsDTOResp> entitiesToDto(List<NewsEntity> newsEntities) {
         return mapper.newsEntitiesToDto(newsEntities);
     }
 
@@ -42,8 +41,8 @@ public class NewsServiceImpl
     }
 
     @Override
-    protected PageDTOResp<NewsDTOResp> pageToDto(Page<NewsEntity> page) {
-        return mapper.authorsPageToDto(page);
+    protected Page<NewsDTOResp> pageToDtoPage(Page<NewsEntity> page) {
+        return mapper.pageToDtoPage(page);
     }
 
     @Override

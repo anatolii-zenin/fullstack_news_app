@@ -2,8 +2,7 @@ package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.TagController;
 import com.mjc.school.service.TagService;
-import com.mjc.school.service.dto.page.PageDTOReq;
-import com.mjc.school.service.dto.page.PageDTOResp;
+import com.mjc.school.service.dto.page.PageReq;
 import com.mjc.school.service.dto.tag.TagDTOReq;
 import com.mjc.school.service.dto.tag.TagDTOResp;
 import io.swagger.annotations.Api;
@@ -11,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +29,18 @@ public class CTagController implements TagController {
     @GetMapping(value = "/tags")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "List all tags.",
-            response = PageDTOResp.class)
+            response = Page.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved requested data"),
             @ApiResponse(code = 400, message = "Received a malformed request"),
             @ApiResponse(code = 500, message = "Unexpected internal error")
     })
-    public PageDTOResp<TagDTOResp> readAll(
+    public Page<TagDTOResp> readAll(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sortBy", required = false, defaultValue = "id") String sortBy,
             @RequestParam(name = "order", required = false, defaultValue = "asc") String order) {
-        var pageReq = new PageDTOReq(page, size, sortBy, order);
+        var pageReq = new PageReq(page, size, sortBy, order);
         return service.readAll(pageReq);
     }
 

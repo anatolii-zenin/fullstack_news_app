@@ -3,7 +3,7 @@ package com.mjc.school.service.validator;
 import com.mjc.school.service.dto.author.AuthorDTOReq;
 import com.mjc.school.service.dto.comment.CommentDTOReq;
 import com.mjc.school.service.dto.news.NewsDTOReq;
-import com.mjc.school.service.dto.page.PageDTOReq;
+import com.mjc.school.service.dto.page.PageReq;
 import com.mjc.school.service.dto.tag.TagDTOReq;
 import com.mjc.school.service.exception.BadRequestException;
 import com.mjc.school.service.validator.implementation.PageValidator;
@@ -43,7 +43,7 @@ public class ValidatorAspect {
     @Before("validatePage()")
     public void validatePageReq(final JoinPoint joinPoint) {
         Class<?> serviceClass = joinPoint.getTarget().getClass();
-        PageDTOReq req = (PageDTOReq) joinPoint.getArgs()[0];
+        PageReq req = (PageReq) joinPoint.getArgs()[0];
         pageValidator.validate(serviceClass, req);
     }
 
