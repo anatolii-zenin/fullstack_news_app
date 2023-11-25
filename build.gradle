@@ -25,7 +25,10 @@ subprojects {
         implementation "org.springframework:spring-core:$springVersion"
         implementation "org.aspectj:aspectjweaver:$jweaverVersion"
         implementation "org.springframework.boot:spring-boot-starter-data-jpa:$bootVersion"
-        implementation ("org.springframework.boot:spring-boot-starter-web:$bootVersion")
+        implementation "org.springframework.boot:spring-boot-starter-web:$bootVersion"
+        implementation "org.springframework.boot:spring-boot-starter-security:$bootVersion"
+        implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server:$bootVersion"
+        implementation "com.nimbusds:nimbus-jose-jwt:$nimbusVersion"
         implementation "io.springfox:springfox-boot-starter:$springfoxStarterVersion"
 
         testImplementation "org.springframework:spring-test:$springVersion"
@@ -36,6 +39,8 @@ subprojects {
 
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"
+
+        implementation 'com.h2database:h2:2.2.224'
     }
 
     test {
