@@ -29,7 +29,6 @@ subprojects {
         implementation "org.springframework.boot:spring-boot-starter-security:$bootVersion"
         implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server:$bootVersion"
         implementation "com.nimbusds:nimbus-jose-jwt:$nimbusVersion"
-        implementation "io.springfox:springfox-boot-starter:$springfoxStarterVersion"
 
         testImplementation "org.springframework:spring-test:$springVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"

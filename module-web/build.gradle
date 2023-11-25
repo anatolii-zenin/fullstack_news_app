@@ -1,6 +1,10 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = 'com.mjc.school.controller.main'
+
 dependencies {
     implementation project(':module-service')
-
-    testImplementation("io.rest-assured:rest-assured:5.3.2")
     testImplementation("org.json:json:20231013")
 }
