@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class CTagController implements TagController {
     @Override
     @GetMapping(value = "/tags")
     @ResponseStatus(HttpStatus.OK)
+    @PermitAll
     public Page<TagDTOResp> readAll(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
@@ -35,6 +38,7 @@ public class CTagController implements TagController {
     @Override
     @GetMapping(value = "/tags/{id:\\d+}")
     @ResponseStatus(HttpStatus.OK)
+    @PermitAll
     public TagDTOResp readById(@PathVariable Long id) {
         return service.readById(id);
     }
@@ -42,6 +46,7 @@ public class CTagController implements TagController {
     @Override
     @PostMapping(value = "/tags/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
     public TagDTOResp create(@RequestBody TagDTOReq createRequest) {
         return service.create(createRequest);
     }
@@ -49,6 +54,7 @@ public class CTagController implements TagController {
     @Override
     @PatchMapping(value = "/tags/{id:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN')")
     public TagDTOResp update(@PathVariable Long id, @RequestBody TagDTOReq updateRequest) {
         updateRequest.setId(id);
         return service.update(updateRequest);
@@ -57,6 +63,7 @@ public class CTagController implements TagController {
     @Override
     @DeleteMapping(value = "/tags/{id:\\d+}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
     }
@@ -64,6 +71,7 @@ public class CTagController implements TagController {
     @Override
     @GetMapping(value = "/news/{id:\\d+}/tags")
     @ResponseStatus(HttpStatus.OK)
+    @PermitAll
     public List<TagDTOResp> readByNewsId(@PathVariable Long id) {
         return service.readByNewsId(id);
     }
