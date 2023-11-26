@@ -7,6 +7,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -61,7 +61,7 @@ public class WebSpringConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(JpaUserDetailsService jpaUserDetailsService) {
+    CommandLineRunner commandLineRunner() {
         jpaUserDetailsService.createRole("ROLE_ADMIN");
         jpaUserDetailsService.createRole("ROLE_USER");
 
@@ -79,8 +79,7 @@ public class WebSpringConfig {
 
         jpaUserDetailsService.createUser(user);
         jpaUserDetailsService.createUser(admin);
-
-        return jpaUserDetailsService;
+        return null;
     }
 
     @Bean
