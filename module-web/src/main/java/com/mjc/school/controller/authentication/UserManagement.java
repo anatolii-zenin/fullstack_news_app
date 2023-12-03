@@ -18,7 +18,7 @@ public class UserManagement {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/signup")
+    @PostMapping("/api/signup")
     @PreAuthorize("hasRole('ANONYMOUS')")
     public String createUser(@RequestBody UserRequest userRequest) {
         var user = User.withUsername(userRequest.getUsername())

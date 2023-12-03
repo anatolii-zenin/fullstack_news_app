@@ -22,15 +22,9 @@ public class JwtAuthenticationResource {
     }
 
     @PostMapping("/authenticate")
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasAnyRole('USER, ADMIN')")
     public JwtResponse authenticate(Authentication authentication) {
         return new JwtResponse(createToken(authentication));
-    }
-
-    @PostMapping("/getAuthentication")
-    @PermitAll
-    public Authentication getAuthentication(Authentication authentication) {
-        return authentication;
     }
 
     private String createToken(Authentication authentication) {

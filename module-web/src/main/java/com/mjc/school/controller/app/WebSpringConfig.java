@@ -44,6 +44,9 @@ public class WebSpringConfig {
         http.authorizeHttpRequests(
                 requests -> requests
                         .antMatchers("/h2-console/**").permitAll()
+                        .antMatchers("/api/**").permitAll()
+                        .antMatchers("/authenticate").permitAll()
+                        .anyRequest().authenticated()
         );
         http.userDetailsService(jpaUserDetailsService);
         http.sessionManagement(
