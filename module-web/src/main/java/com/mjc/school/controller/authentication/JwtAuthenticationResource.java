@@ -1,6 +1,5 @@
 package com.mjc.school.controller.authentication;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -9,7 +8,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.PermitAll;
 import java.time.Instant;
 import java.util.List;
 
@@ -22,7 +20,6 @@ public class JwtAuthenticationResource {
     }
 
     @PostMapping("/authenticate")
-//    @PreAuthorize("hasAnyRole('USER, ADMIN')")
     public JwtResponse authenticate(Authentication authentication) {
         return new JwtResponse(createToken(authentication));
     }
