@@ -24,6 +24,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -46,7 +48,7 @@ public class WebSpringConfig {
                         .antMatchers("/h2-console/**").permitAll()
                         .antMatchers("/api/**").permitAll()
                         .antMatchers("/authenticate").permitAll()
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
         );
         http.userDetailsService(jpaUserDetailsService);
         http.sessionManagement(
@@ -139,6 +141,18 @@ public class WebSpringConfig {
         final JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("*")
+                        .allowedOrigins("http://localhost:3000");
+            }
+        };
     }
 
 }
