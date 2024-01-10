@@ -4,6 +4,7 @@ import com.mjc.school.controller.AuthorController;
 import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.dto.author.AuthorDTOReq;
 import com.mjc.school.service.dto.author.AuthorDTOResp;
+import com.mjc.school.service.dto.filter.FilterReqDTO;
 import com.mjc.school.service.dto.page.PageReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.security.PermitAll;
 
@@ -28,8 +33,10 @@ public class CAuthorController implements AuthorController {
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sortBy", required = false, defaultValue = "createDate") String sortBy,
-            @RequestParam(name = "order", required = false, defaultValue = "desc") String order) {
+            @RequestParam(name = "order", required = false, defaultValue = "desc") String order,
+            @RequestBody(required = false) List<FilterReqDTO> filters) {
         var pageReq = new PageReq(page, size, sortBy, order);
+        pageReq.setFilters(Objects.requireNonNullElseGet(filters, ArrayList::new));
         return service.readAll(pageReq);
     }
 

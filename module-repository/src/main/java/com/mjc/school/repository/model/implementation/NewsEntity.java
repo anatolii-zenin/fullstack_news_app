@@ -23,7 +23,7 @@ public class NewsEntity implements BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private AuthorEntity author;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "news_tags",
         joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"),

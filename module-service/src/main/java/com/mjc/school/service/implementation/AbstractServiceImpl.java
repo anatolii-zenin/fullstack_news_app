@@ -5,33 +5,32 @@ import com.mjc.school.service.PaginationCapableService;
 import com.mjc.school.service.dto.Request;
 import com.mjc.school.service.dto.page.PageReq;
 import com.mjc.school.service.exception.NotFoundException;
+import com.mjc.school.service.filtering.FilterService;
 import com.mjc.school.service.validator.annotations.Validate;
 import com.mjc.school.service.validator.annotations.ValidatePage;
 import com.mjc.school.service.validator.annotations.ValidateUpdate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public abstract class AbstractServiceImpl<Req extends Request<Long>, Resp, Entity extends BaseEntity<Long>,
-        Repository extends PagingAndSortingRepository<Entity, Long>>
+        Repository extends JpaRepository<Entity, Long> & JpaSpecificationExecutor<Entity>>
         implements PaginationCapableService<Req, Resp, Long> {
+
+    @Autowired
+    FilterService<Entity> filterService;
 
     @Override
     @Transactional(readOnly = true)
     public Page<Resp> readAll(@ValidatePage PageReq req) {
-        var sorting = req.getOrder().equals("asc") ?
-                Sort.by(req.getSortedBy()).ascending() :
-                Sort.by(req.getSortedBy()).descending();
-        var request = PageRequest.of(
-                req.getPageNum() - 1,
-                req.getPageSize(),
-                sorting
-        );
-        return pageToDtoPage(getRepo().findAll(request));
+        var request = req.getPageable();
+        Specification<Entity> specs = filterService.getSearchSpecification(req.getFilters());
+        return pageToDtoPage(getRepo().findAll(specs, request));
     }
 
     @Override

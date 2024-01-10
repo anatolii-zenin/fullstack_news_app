@@ -2,6 +2,7 @@ package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.TagController;
 import com.mjc.school.service.TagService;
+import com.mjc.school.service.dto.filter.FilterReqDTO;
 import com.mjc.school.service.dto.page.PageReq;
 import com.mjc.school.service.dto.tag.TagDTOReq;
 import com.mjc.school.service.dto.tag.TagDTOResp;
@@ -13,7 +14,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -30,8 +33,10 @@ public class CTagController implements TagController {
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sortBy", required = false, defaultValue = "id") String sortBy,
-            @RequestParam(name = "order", required = false, defaultValue = "asc") String order) {
+            @RequestParam(name = "order", required = false, defaultValue = "desc") String order,
+            @RequestBody(required = false) List<FilterReqDTO> filters) {
         var pageReq = new PageReq(page, size, sortBy, order);
+        pageReq.setFilters(Objects.requireNonNullElseGet(filters, ArrayList::new));
         return service.readAll(pageReq);
     }
 
@@ -46,7 +51,7 @@ public class CTagController implements TagController {
     @Override
     @PostMapping(value = "/tags/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('USER')")
     public TagDTOResp create(@RequestBody TagDTOReq createRequest) {
         return service.create(createRequest);
     }
@@ -75,4 +80,13 @@ public class CTagController implements TagController {
     public List<TagDTOResp> readByNewsId(@PathVariable Long id) {
         return service.readByNewsId(id);
     }
+
+    @Override
+    @GetMapping(value = "/tags/by-name")
+    @ResponseStatus(HttpStatus.OK)
+    @PermitAll
+    public TagDTOResp readByName(@RequestParam String name) {
+        return service.readByName(name);
+    }
+
 }

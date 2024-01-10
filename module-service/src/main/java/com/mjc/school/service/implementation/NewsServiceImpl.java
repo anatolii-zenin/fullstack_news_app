@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,15 +51,5 @@ public class NewsServiceImpl
     @Override
     protected void updateEntityFromDto(NewsDTOReq req, NewsEntity entity) {
         mapper.updateEntityFromDto(req, entity);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<NewsDTOResp> readByCriteria(NewsDTOReq req) {
-        var news = newsRepository.readNewsByCriteria(dtoToEntity(req));
-        var newsResps = new ArrayList<NewsDTOResp>();
-        for (var entry : news)
-            newsResps.add(entityToDto(entry));
-        return newsResps;
     }
 }
