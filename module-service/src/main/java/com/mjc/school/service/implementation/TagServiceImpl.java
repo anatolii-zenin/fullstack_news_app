@@ -61,6 +61,6 @@ public class TagServiceImpl
 
     @Override
     public TagDTOResp readByName(String name) {
-        return entityToDto(tagRepository.findTagByName(name).orElse(null));
+        return entityToDto(tagRepository.findByNameIgnoreCaseContaining(name).orElse(null));
     }
 }

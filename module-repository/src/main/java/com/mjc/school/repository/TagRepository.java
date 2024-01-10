@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface TagRepository extends JpaRepository<TagEntity, Long>, JpaSpecificationExecutor<TagEntity> {
     List<TagEntity> readTagsByNewsId(Long newsId);
-    Optional<TagEntity> findTagByName(String name);
+    Optional<TagEntity> findByNameIgnoreCaseContaining(String name);
 }
