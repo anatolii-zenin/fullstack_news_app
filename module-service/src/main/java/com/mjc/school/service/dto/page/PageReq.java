@@ -29,7 +29,7 @@ public class PageReq {
         int page = pageNum != null ? pageNum-1 : 0;
         int size = pageSize != null ? pageSize : 10;
         String sortBy = sortedBy != null ? sortedBy : "id";
-        Sort.Direction sortOrder = order.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort.Direction sortOrder = order.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
 
         return PageRequest.of(page, size, sortOrder, sortBy);
     }
