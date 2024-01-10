@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TagController extends BaseController<TagDTOReq, TagDTOResp, Long> {
     List<TagDTOResp> readByNewsId(Long id);
+    TagDTOResp readByName(String name);
 }

@@ -58,4 +58,9 @@ public class TagServiceImpl
     public List<TagDTOResp> readByNewsId(Long id) {
         return entitiesToDto(tagRepository.readTagsByNewsId(id));
     }
+
+    @Override
+    public TagDTOResp readByName(String name) {
+        return entityToDto(tagRepository.findTagByName(name).orElse(null));
+    }
 }

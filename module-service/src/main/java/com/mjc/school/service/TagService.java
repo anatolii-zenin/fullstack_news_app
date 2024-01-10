@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TagService extends PaginationCapableService<TagDTOReq, TagDTOResp, Long>{
     List<TagDTOResp> readByNewsId(Long id);
+    TagDTOResp readByName(String name);
 }
