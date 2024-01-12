@@ -16,6 +16,7 @@ import java.util.List;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
 public abstract class NewsDTOMapper {
+    @Mapping(target = "authorName", source = "newsEntity.author.name")
     public abstract NewsDTOResp newsToDto(NewsEntity newsEntity);
 
     @Mapping(ignore = true, target = "createDate")

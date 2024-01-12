@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class NewsDTOResp {
     private Long id;
+    private String authorName;
     private String title;
     private String content;
     private LocalDateTime createDate;
