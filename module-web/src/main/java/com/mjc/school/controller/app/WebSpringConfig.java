@@ -11,6 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,7 +37,7 @@ import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(jsr250Enabled = true)
+@EnableMethodSecurity
 @ComponentScan({"com.mjc.school.service", "com.mjc.school.controller"})
 public class WebSpringConfig {
     @Autowired
@@ -54,7 +56,7 @@ public class WebSpringConfig {
         http.sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
-        http.httpBasic();
+        http.httpBasic().disable();
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
         http.oauth2ResourceServer(
@@ -82,8 +84,8 @@ public class WebSpringConfig {
                 .roles("ADMIN", "USER")
                 .build();
 
-        jpaUserDetailsService.createUser(user);
-        jpaUserDetailsService.createUser(admin);
+        jpaUserDetailsService.createUserAndAuthor(user);
+        jpaUserDetailsService.createUserAndAuthor(admin);
         return null;
     }
 
@@ -155,4 +157,9 @@ public class WebSpringConfig {
         };
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }
