@@ -27,7 +27,7 @@ public class UserManagement {
                 .roles("USER")
                 .build();
 
-        jpaUserDetailsService.createUser(user);
+        jpaUserDetailsService.createUserAndAuthor(user);
         return "success";
     }
 }

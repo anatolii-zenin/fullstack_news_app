@@ -1,5 +1,6 @@
 package com.mjc.school.repository.model.implementation;
 
+import com.mjc.school.repository.authentication.model.UserEntity;
 import com.mjc.school.repository.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,8 @@ public class AuthorEntity implements BaseEntity<Long> {
     private LocalDateTime lastUpdateDate;
     @OneToMany(mappedBy = "author", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
     private List<NewsEntity> news;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "author")
+    private UserEntity user;
 
     @PrePersist
     public void prePersist() {

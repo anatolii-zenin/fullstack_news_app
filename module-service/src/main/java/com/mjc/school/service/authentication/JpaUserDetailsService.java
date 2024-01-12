@@ -1,9 +1,11 @@
 package com.mjc.school.service.authentication;
 
+import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.authentication.RoleRepository;
 import com.mjc.school.repository.authentication.UserRepository;
 import com.mjc.school.repository.authentication.model.RoleEntity;
 import com.mjc.school.repository.authentication.model.UserEntity;
+import com.mjc.school.repository.model.implementation.AuthorEntity;
 import com.mjc.school.service.exception.NotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,12 +19,15 @@ import java.util.ArrayList;
 public class JpaUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final AuthorRepository authorRepository;
 
     public JpaUserDetailsService(
             UserRepository userRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            AuthorRepository authorRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.authorRepository = authorRepository;
     }
     @Override
     @Transactional
@@ -41,7 +46,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public void createUser(UserDetails user) {
+    public void createUserAndAuthor(UserDetails user) {
         var newUser = new UserEntity();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(user.getPassword());
@@ -50,6 +55,12 @@ public class JpaUserDetailsService implements UserDetailsService {
             roles.add(roleRepository.findByName(authority.getAuthority())
                     .orElseThrow(() -> new NotFoundException("no such role: " + authority.getAuthority())));
         newUser.setRoles(roles);
+
+        var authorEntity = new AuthorEntity();
+        authorEntity.setName(user.getUsername());
+        authorRepository.save(authorEntity);
+
+        newUser.setAuthor(authorEntity);
         userRepository.save(newUser);
     }
 }

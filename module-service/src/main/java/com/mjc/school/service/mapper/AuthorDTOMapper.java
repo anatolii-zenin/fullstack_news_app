@@ -23,10 +23,12 @@ public abstract class AuthorDTOMapper {
     @Mapping(ignore = true, target = "createDate")
     @Mapping(ignore = true, target = "lastUpdateDate")
     @Mapping(ignore = true, target = "news")
+    @Mapping(ignore = true, target = "user")
     public abstract void updateEntityFromDto(AuthorDTOReq req, @MappingTarget AuthorEntity entity);
     @Mapping(ignore = true, target = "createDate")
     @Mapping(ignore = true, target = "lastUpdateDate")
     @Mapping(ignore = true, target = "news")
+    @Mapping(ignore = true, target = "user")
     public abstract AuthorEntity authorReqToEntity(AuthorDTOReq authorDTOReq);
 
     public AuthorEntity authorIdToEntity(Long id) {
