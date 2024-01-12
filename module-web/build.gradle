@@ -1,8 +1,39 @@
 plugins {
     id 'application'
+    id "com.github.node-gradle.node" version "3.5.0"
+    id 'org.springframework.boot' version "$bootVersion"
+    id 'war'
 }
 
-mainClassName = 'com.mjc.school.controller.main'
+node {
+    version = '20.10.0'
+    workDir = file("${project.projectDir}/frontend/node")
+    npmWorkDir = file("${project.projectDir}/frontend/npm")
+}
+
+
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${project.projectDir}/frontend")
+    args = ["install"]
+}
+task appNpmBuild(type: NpmTask, dependsOn: 'appNpmInstall') {
+    workingDir = file("${project.projectDir}/frontend")
+    args = ["run", "build"]
+}
+task copyReactBuild(type: Copy, dependsOn: 'appNpmBuild') {
+    from 'frontend/build'
+    into 'src/main/resources/static'
+}
+
+processResources {
+    dependsOn copyReactBuild
+}
+
+bootRun {
+    dependsOn copyReactBuild
+}
+
+mainClassName = 'com.mjc.school.controller.app.Main'
 
 dependencies {
     implementation project(':module-service')
