@@ -12,62 +12,59 @@ import java.util.List;
 @Service
 public class FilterService<T> {
 
+
     public Specification<T> getSearchSpecification(List<FilterReqDTO> filterReqs) {
         return (root, query, criteriaBuilder) -> {
 
-            var orPredicates = new ArrayList<Predicate>();
-            var andPredicates = new ArrayList<Predicate>();
+            List<Predicate> orPredicates = new ArrayList<>();
+            List<Predicate> andPredicates = new ArrayList<>();
 
             for (var filterReq : filterReqs) {
-                var subPredicate = criteriaBuilder.conjunction();
+                Predicate subPredicate = null;
                 if (filterReq.getSubFilters() != null)
                     subPredicate = getSearchSpecification(filterReq.getSubFilters())
                             .toPredicate(root, query, criteriaBuilder);
 
+                Predicate predicate = null;
+
                 switch (filterReq.getOperation()) {
-                    case EQUAL -> {
-                        Predicate equal = criteriaBuilder.equal(
+                    case EQUAL ->
+                        predicate = criteriaBuilder.equal(
                                 criteriaBuilder.lower(root.get(filterReq.getColumn())),
                                 filterReq.getValue().toLowerCase()
                         );
-                        if(filterReq.getLogicalOperation().equals(FilterReqDTO.LogicalOperation.AND))
-                            andPredicates.add(equal);
-                        else
-                            orPredicates.add(equal);
-                    }
-                    case LIKE -> {
-                        Predicate like = criteriaBuilder.like(
+                    case LIKE ->
+                        predicate = criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get(filterReq.getColumn())),
                                 filterReq.getValue().toLowerCase()
                         );
-                        if(filterReq.getLogicalOperation().equals(FilterReqDTO.LogicalOperation.AND))
-                            andPredicates.add(like);
-                        else
-                            orPredicates.add(like);
-                    }
-                    case JOIN -> {
-                        Predicate join =
+                    case JOIN ->
+                        predicate =
                                 criteriaBuilder.like(
                                         criteriaBuilder.lower(
                                                 root.join(filterReq.getJoinTableName()).get(filterReq.getColumn())),
                                         filterReq.getValue().toLowerCase()
                                 );
-                        if(filterReq.getLogicalOperation().equals(FilterReqDTO.LogicalOperation.AND))
-                            andPredicates.add(join);
-                        else
-                            orPredicates.add(join);
-                    }
                     case COMBINE -> {
-
+                        if (filterReq.getSubFilters() == null || filterReq.getSubFilters().isEmpty())
+                            throw new BadRequestException("Unable to combine if sub-filters are empty");
+                        if (filterReq.getColumn() != null || filterReq.getValue() != null)
+                            throw new BadRequestException(
+                                    "Column and value should not be provided when combining sub-filters");
                     }
                     default -> throw new BadRequestException("Unknown filter operation: " + filterReq.getOperation());
                 }
+                if (subPredicate != null)
+                    predicate = subPredicate;
 
-                if (filterReq.getSubFilters() != null)
-                    if(filterReq.getLogicalOperation().equals(FilterReqDTO.LogicalOperation.AND))
-                        andPredicates.add(subPredicate);
-                    else
-                        orPredicates.add(subPredicate);
+                if (filterReqs.size() <= 1) {
+                    return predicate;
+                }
+
+                if (filterReq.getLogicalOperation().equals(FilterReqDTO.LogicalOperation.AND))
+                    andPredicates.add(predicate);
+                else
+                    orPredicates.add(predicate);
             }
 
             if (orPredicates.isEmpty() && !andPredicates.isEmpty())
