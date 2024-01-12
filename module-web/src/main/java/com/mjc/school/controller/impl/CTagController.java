@@ -26,7 +26,7 @@ public class CTagController implements TagController {
     TagService service;
 
     @Override
-    @GetMapping(value = "/tags")
+    @PostMapping(value = "/tags")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
     public Page<TagDTOResp> readAll(
@@ -51,7 +51,7 @@ public class CTagController implements TagController {
     @Override
     @PostMapping(value = "/tags/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     public TagDTOResp create(@RequestBody TagDTOReq createRequest) {
         return service.create(createRequest);
     }

@@ -24,7 +24,7 @@ public class CCommentController implements CommentController {
     @Autowired
     CommentService service;
     @Override
-    @GetMapping(value = "/comments")
+    @PostMapping(value = "/comments")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
     public Page<CommentDTOResp> readAll(

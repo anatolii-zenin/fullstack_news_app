@@ -26,9 +26,9 @@ public class CAuthorController implements AuthorController {
     AuthorService service;
 
     @Override
-    @GetMapping(value = "/authors")
+    @PostMapping(value = "/authors")
     @ResponseStatus(HttpStatus.OK)
-    @PermitAll
+    @PreAuthorize("hasRole('USER')")
     public Page<AuthorDTOResp> readAll(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
