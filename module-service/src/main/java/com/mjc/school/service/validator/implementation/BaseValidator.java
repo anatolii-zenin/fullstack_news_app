@@ -34,4 +34,5 @@ public abstract class BaseValidator<Req> implements Validator<Req> {
     private boolean validateLength(int value, int from, int to) {
         return value >= from && value <= to;
     }
+
 }

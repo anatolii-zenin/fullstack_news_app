@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Long>, JpaSpecificationExecutor<AuthorEntity> {
     Optional<AuthorEntity> readAuthorByNewsId(Long newsId);
+    Optional<AuthorEntity> readAuthorByName(String name);
 }

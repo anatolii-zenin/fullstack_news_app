@@ -58,4 +58,9 @@ public class AuthorServiceImpl
         var entity = authorRepository.readAuthorByNewsId(newsId);
         return entity.map(this::entityToDto).orElse(null);
     }
+
+    @Override
+    public AuthorDTOResp readByName(String name) {
+        return entityToDto(authorRepository.readAuthorByName(name).orElse(null));
+    }
 }

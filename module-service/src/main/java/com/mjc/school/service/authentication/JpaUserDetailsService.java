@@ -6,6 +6,7 @@ import com.mjc.school.repository.authentication.UserRepository;
 import com.mjc.school.repository.authentication.model.RoleEntity;
 import com.mjc.school.repository.authentication.model.UserEntity;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
+import com.mjc.school.service.exception.BadRequestException;
 import com.mjc.school.service.exception.NotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,6 +48,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 
     @Transactional
     public void createUserAndAuthor(UserDetails user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent())
+            throw new BadRequestException("User " + user.getUsername() + " already exists.");
         var newUser = new UserEntity();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(user.getPassword());
