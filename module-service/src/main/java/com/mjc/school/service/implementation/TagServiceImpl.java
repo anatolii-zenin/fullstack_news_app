@@ -6,6 +6,7 @@ import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.tag.TagDTOReq;
 import com.mjc.school.service.dto.tag.TagDTOResp;
 import com.mjc.school.service.mapper.TagDTOMapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -21,8 +22,7 @@ public class TagServiceImpl
         implements TagService {
     @Autowired
     TagRepository tagRepository;
-    @Autowired
-    TagDTOMapper mapper;
+    TagDTOMapper mapper = Mappers.getMapper(TagDTOMapper.class);
     @Override
     protected TagEntity dtoToEntity(TagDTOReq tagDTOReq) {
         return mapper.reqToEntity(tagDTOReq);

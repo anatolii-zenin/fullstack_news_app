@@ -6,6 +6,7 @@ import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.dto.author.AuthorDTOReq;
 import com.mjc.school.service.dto.author.AuthorDTOResp;
 import com.mjc.school.service.mapper.AuthorDTOMapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,7 @@ public class AuthorServiceImpl
         implements AuthorService {
     @Autowired
     AuthorRepository authorRepository;
-    @Autowired
-    AuthorDTOMapper mapper;
+    AuthorDTOMapper mapper = Mappers.getMapper(AuthorDTOMapper.class);
 
     @Override
     protected AuthorEntity dtoToEntity(AuthorDTOReq authorDTOReq) {

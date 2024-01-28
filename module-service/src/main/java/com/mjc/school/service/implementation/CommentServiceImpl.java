@@ -6,6 +6,7 @@ import com.mjc.school.service.CommentService;
 import com.mjc.school.service.dto.comment.CommentDTOReq;
 import com.mjc.school.service.dto.comment.CommentDTOResp;
 import com.mjc.school.service.mapper.CommentDTOMapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -21,8 +22,7 @@ public class CommentServiceImpl
         implements CommentService {
     @Autowired
     CommentRepository commentRepository;
-    @Autowired
-    CommentDTOMapper mapper;
+    CommentDTOMapper mapper = Mappers.getMapper(CommentDTOMapper.class);
     @Override
     protected CommentEntity dtoToEntity(CommentDTOReq dto) {
         return mapper.dtoToCommentEntity(dto);

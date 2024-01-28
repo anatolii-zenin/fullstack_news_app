@@ -6,6 +6,7 @@ import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.news.NewsDTOReq;
 import com.mjc.school.service.dto.news.NewsDTOResp;
 import com.mjc.school.service.mapper.NewsDTOMapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,7 @@ public class NewsServiceImpl
         implements NewsService {
     @Autowired
     NewsRepository newsRepository;
-    @Autowired
-    NewsDTOMapper mapper;
+    NewsDTOMapper mapper = Mappers.getMapper(NewsDTOMapper.class);
 
     @Override
     protected NewsEntity dtoToEntity(NewsDTOReq newsDTOReq) {
