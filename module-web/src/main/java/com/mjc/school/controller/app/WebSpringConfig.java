@@ -50,6 +50,7 @@ public class WebSpringConfig {
                         .antMatchers("/h2-console/**").permitAll()
                         .antMatchers("/api/**").permitAll()
                         .antMatchers("/authenticate").permitAll()
+                        .antMatchers("/").permitAll()
 //                        .anyRequest().authenticated()
         );
         http.userDetailsService(jpaUserDetailsService);
