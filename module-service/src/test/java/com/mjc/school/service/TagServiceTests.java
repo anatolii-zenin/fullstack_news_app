@@ -1,6 +1,7 @@
 //package com.mjc.school.service;
 //
-//import com.mjc.school.service.dto.page.PageDTOReq;
+//import com.mjc.school.service.dto.page.PageReq;
+//import com.mjc.school.service.dto.tag.TagDTOResp;
 //import com.mjc.school.service.exception.NotFoundException;
 //import com.mjc.school.service.implementation.AuthorServiceImpl;
 //import com.mjc.school.service.implementation.NewsServiceImpl;
@@ -9,6 +10,7 @@
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+//import org.springframework.data.domain.Page;
 //
 //import java.util.ArrayList;
 //import java.util.List;
@@ -63,8 +65,8 @@
 //            assertEquals("Tag is not tied to the news entry", newsId, tagEntries.get(0).getId());
 //        }
 //
-//        var allEntries = tagService.readAll(new PageDTOReq(1, 10, "id", "asc"));
-//        assertEquals("Incorrect number of entries:", testEntries, allEntries.getData().size());
+//        Page<TagDTOResp> allEntries = tagService.readAll(new PageReq(1, 10, "id", "asc"));
+//        assertEquals("Incorrect number of entries:", testEntries, allEntries.getContent().size());
 //    }
 //
 //    @Test
@@ -91,8 +93,8 @@
 //            assertEquals("Tag is not as expected", tagNameBase + i, tagsFromNews.get(i).getName());
 //        }
 //
-//        var allNewsEntries = newsService.readAll(new PageDTOReq(1, 10, "id", "asc"));
-//        assertEquals("Incorrect number of entries:", 1, allNewsEntries.getData().size());
+//        var allNewsEntries = newsService.readAll(new PageReq(1, 10, "id", "asc"));
+//        assertEquals("Incorrect number of entries:", 1, allNewsEntries.getContent().size());
 //    }
 //
 //    @Test
