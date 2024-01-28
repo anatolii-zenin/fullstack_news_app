@@ -43,7 +43,7 @@ function SignupComponent() {
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Sign Up</h2>
-                    {error != "" && <Alert variant="danger">{error}</Alert>}
+                    {error !== "" && <Alert variant="danger">{error}</Alert>}
                     {success && <Alert variant="success">Sign-up successful</Alert>}
                     {!success &&
                         <Form onSubmit={handleSubmit}>

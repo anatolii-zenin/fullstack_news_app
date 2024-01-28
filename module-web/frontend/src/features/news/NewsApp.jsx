@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom"
+import { Routes, Route, Navigate, HashRouter } from "react-router-dom"
 import "./NewsApp.css"
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
 import AuthProvider from "../authentication/AuthContext"

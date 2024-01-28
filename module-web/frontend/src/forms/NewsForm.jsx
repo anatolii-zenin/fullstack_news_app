@@ -82,7 +82,7 @@ function NewsForm({jwt, message, id, currentTitle, currentContent, currentTags, 
                 <Card>
                     <Card.Body>
                         <h2 className="text-center mb-4">{message}</h2>
-                        {error != "" && <Alert variant="danger">{error}</Alert>}
+                        {error !== "" && <Alert variant="danger">{error}</Alert>}
                         <Form>
                             <Form.Group id="title">
                                 <Form.Label>Title</Form.Label>
