@@ -7,3 +7,4 @@
 /module-service/build/
 /module-web/build/
 gradlew*
+/module-web/src/main/resources/static/
