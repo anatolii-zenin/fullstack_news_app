@@ -1,7 +1,9 @@
 package com.mjc.school.repository.model.implementation;
 
 import com.mjc.school.repository.model.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "tag")
 public class TagEntity implements BaseEntity<Long> {
     @Id
