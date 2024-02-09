@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {TagDTOMapper.class, AuthorDTOMapper.class},
+@Mapper(uses = {TagDTOMapper.class, AuthorDTOMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
 public abstract class NewsDTOMapper {

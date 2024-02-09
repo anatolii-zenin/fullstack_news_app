@@ -11,8 +11,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public abstract class CommentDTOMapper {
     public abstract CommentDTOResp commentEntityToDto(CommentEntity commentEntity);
     public abstract List<CommentDTOResp> commentEntitiesToDto(List<CommentEntity> commentEntities);

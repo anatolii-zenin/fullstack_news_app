@@ -59,7 +59,7 @@ public class CNewsController implements NewsController {
     @Override
     @PatchMapping(value = "/{id:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public NewsDTOResp update(@PathVariable Long id, @RequestBody NewsDTOReq updateRequest) {
         updateRequest.setId(id);
         return service.update(updateRequest);
